@@ -384,9 +384,11 @@ export interface ApiScoreScore extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    event: Schema.Attribute.Text & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::score.score'> &
       Schema.Attribute.Private;
+    max_score: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     score: Schema.Attribute.String;
     students: Schema.Attribute.Relation<
@@ -915,6 +917,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    Name: Schema.Attribute.String & Schema.Attribute.Required;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -928,8 +931,14 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.role'
     >;
     scores: Schema.Attribute.Relation<'oneToMany', 'api::score.score'>;
-    Ssubject: Schema.Attribute.Relation<'manyToMany', 'api::subject.subject'>;
-    Tsubject: Schema.Attribute.Relation<'oneToMany', 'api::subject.subject'>;
+    Std_subject: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::subject.subject'
+    >;
+    Teac_subject: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subject.subject'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -26,6 +26,13 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "scores"
+    },
+    "event": {
+      "type": "text",
+      "required": true
+    },
+    "max_score": {
+      "type": "string"
     }
   }
 }
