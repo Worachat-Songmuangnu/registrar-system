@@ -4,7 +4,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen flex flex-col w-full bg-gradient-to-b from-gray-900 to-gray-600 ">
+    <div className="h-screen flex flex-col w-full bg-gradient-to-b from-blue-950 to-blue-400 ">
       <div className="flex flex-col justify-items-center items-center ">
         <p className="text-white text-4xl font-bold mt-48">Welcome to PSU Registrar System!</p>
         <p className="text-white text-2xl  mt-5 mb-20">

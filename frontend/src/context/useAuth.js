@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }) => {
           : { path: "/" }; // Session cookie
 
         setUser({ ...userData, role, jwt }, cookieOptions, formData.rememberMe);
-        console.log(role);
         if (role == "student") {
           navigate("/student/dashboard", { replace: true });
         } else if (role == "teacher") {

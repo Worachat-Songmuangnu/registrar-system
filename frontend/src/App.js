@@ -7,7 +7,6 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Teacher from "./pages/Teacher";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import SignIn from "./pages/SignIn";
-import { ProtectedRoute } from "./context/ProtectedRoute";
 import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
