@@ -1,4 +1,7 @@
+import { useAuth } from "../context/useAuth";
+
 export default function NavigationBar() {
+  const { user } = useAuth();
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -37,9 +40,13 @@ export default function NavigationBar() {
               </li>
             </ul>
           </div>
-          <div className="px-5 py-1 bg-white rounded-full font-semibold ">
-            <a href="/login">Sign in</a>
-          </div>
+          {user ? (
+            <div>{user.username}</div>
+          ) : (
+            <div className="px-5 py-1 bg-white rounded-full font-semibold ">
+              <a href="/login">Sign in</a>
+            </div>
+          )}
         </div>
       </nav>
     </>

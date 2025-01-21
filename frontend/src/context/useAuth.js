@@ -33,15 +33,13 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common = { Authorization: `bearer ${jwt}` };
 
         const roleResponse = await axios.get(URL_ROLE);
-        console.log(roleResponse);
-        console.log(roleResponse.role.name);
 
         const cookieOptions = formData.rememberMe
           ? { path: "/", expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) } // Persistent cookie (30 days)
           : { path: "/" }; // Session cookie
 
         setUser({ ...userData, jwt }, cookieOptions, formData.rememberMe);
-        navigate("/dashboard", { replace: true });
+        navigate("/student/dashboard", { replace: true });
       } catch (error) {
         console.error("Login failed:", error.message || "An error occurred");
         alert("Login failed. Please check your credentials.");
