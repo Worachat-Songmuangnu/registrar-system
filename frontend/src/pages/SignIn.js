@@ -7,7 +7,7 @@ export default function SignIn() {
 
   const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
   const { login } = useAuth();
   const handleLogin = async () => {
@@ -71,7 +71,7 @@ export default function SignIn() {
                         type="checkbox"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300  "
                         required=""
-                        value={rememberMe}
+                        checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.value)}
                       />
                     </div>
