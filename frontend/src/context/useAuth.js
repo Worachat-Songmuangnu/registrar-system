@@ -8,6 +8,7 @@ const AuthContext = createContext();
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:1337";
 const URL_AUTH = "/api/auth/local";
+const URL_ROLE = "/api/users/me?populate=role";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser, removeUser] = useCookie("user", null);
@@ -26,9 +27,14 @@ export const AuthProvider = ({ children }) => {
           identifier: formData.identifier,
           password: formData.password,
         });
+
         const { jwt, user: userData } = response.data;
 
         axios.defaults.headers.common = { Authorization: `bearer ${jwt}` };
+
+        const roleResponse = await axios.get(URL_ROLE);
+        console.log(roleResponse);
+        console.log(roleResponse.role.name);
 
         const cookieOptions = formData.rememberMe
           ? { path: "/", expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) } // Persistent cookie (30 days)

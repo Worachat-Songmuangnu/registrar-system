@@ -15,7 +15,7 @@ function App() {
     <>
       <AuthProvider>
         <NavigationBar />
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Routes element={<NavigationBar />}>
             <Route path="/" element={<Home />} />
 
