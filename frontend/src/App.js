@@ -9,56 +9,58 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import SignIn from "./pages/SignIn";
 import { ProtectedRoute } from "./context/ProtectedRoute";
 import { AuthProvider } from "./context/useAuth";
+import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
+import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
 
 function App() {
   return (
     <>
       <AuthProvider>
         <NavigationBar />
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Routes element={<NavigationBar />}>
-            <Route path="/" element={<Home />} />
+        <Routes element={<NavigationBar />}>
+          <Route path="/" element={<Home />} />
 
-            {/* Student */}
-            <Route
-              path="/student"
-              element={
-                <ProtectedRoute>
-                  <Student />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/student/dashboard"
-              element={
-                <ProtectedRoute>
-                  <StudentDashboard />
-                </ProtectedRoute>
-              }
-            />
+          {/* <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"> */}
+          {/* Student */}
+          <Route
+            path="/student"
+            element={
+              <ProtectedStudentRoute>
+                <Student />
+              </ProtectedStudentRoute>
+            }
+          />
+          <Route
+            path="/student/dashboard"
+            element={
+              <ProtectedStudentRoute>
+                <StudentDashboard />
+              </ProtectedStudentRoute>
+            }
+          />
 
-            {/* Teacher */}
-            <Route
-              path="/teacher"
-              element={
-                <ProtectedRoute>
-                  <Teacher />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/teacher/dashboard"
-              element={
-                <ProtectedRoute>
-                  <TeacherDashboard />
-                </ProtectedRoute>
-              }
-            />
+          {/* Teacher */}
+          <Route
+            path="/teacher"
+            element={
+              <ProtectedTeacherRoute>
+                <Teacher />
+              </ProtectedTeacherRoute>
+            }
+          />
+          <Route
+            path="/teacher/dashboard"
+            element={
+              <ProtectedTeacherRoute>
+                <TeacherDashboard />
+              </ProtectedTeacherRoute>
+            }
+          />
 
-            {/* SignIn */}
-            <Route path="/login" element={<SignIn />} />
-          </Routes>
-        </div>
+          {/* SignIn */}
+          <Route path="/login" element={<SignIn />} />
+          {/* </div> */}
+        </Routes>
       </AuthProvider>
     </>
   );
