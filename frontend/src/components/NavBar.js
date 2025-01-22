@@ -17,7 +17,7 @@ const UserDetails = React.memo(({ user, logout }) => {
 export default function NavigationBar() {
   const { user, logout } = useAuth();
   return (
-    <nav className="bg-primary">
+    <nav className="bg-primarydark">
       <div className="max-w-screen-xl flex flex-row items-center justify-between mx-auto p-4">
         {/* Logo Section */}
         <div className="w-fit">
