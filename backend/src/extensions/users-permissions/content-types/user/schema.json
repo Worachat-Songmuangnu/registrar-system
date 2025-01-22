@@ -65,13 +65,13 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "Tsubject": {
+    "Teac_subject": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::subject.subject",
       "mappedBy": "teacher"
     },
-    "Ssubject": {
+    "Std_subject": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::subject.subject",
@@ -82,6 +82,10 @@
       "relation": "oneToMany",
       "target": "api::score.score",
       "mappedBy": "students"
+    },
+    "Name": {
+      "type": "string",
+      "required": true
     }
   }
 }
