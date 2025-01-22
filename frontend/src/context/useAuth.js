@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }) => {
   const autoLogin = useCallback(async () => {
     try {
       setIsLoading(true);
-      updateJwt(jwt.jwt);
       if (jwt) {
+        updateJwt(jwt.jwt);
         const response = await ax.get(conf.jwtRoleEndpoint);
         const userData = response.data;
         const role = userData.role.name;
@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Login failed:", error.message || "An error occurred");
-      alert("Login failed. Please check your credentials.");
     } finally {
       setIsLoading(false);
     }

@@ -10,6 +10,7 @@ import SignIn from "./pages/SignIn";
 import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
+import { useEffect } from "react";
 
 function App() {
   return (
