@@ -1,5 +1,5 @@
 // useAuth.js
-import { createContext, useCallback, useContext, useEffect, useMemo } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { useCookie } from "./useCookie";
 import conf from "../conf/main";
@@ -8,23 +8,39 @@ import ax, { axData } from "../conf/ax";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser, removeUser] = useCookie("user", null);
+  const [jwt, setJwt, removeJwt] = useCookie("user", null);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const updateJwt = (jwt) => {
     axData.jwt = jwt;
-    if (jwt) {
-      sessionStorage.setItem(conf.jwtSessionStorageKey, jwt);
-    } else {
-      sessionStorage.removeItem(conf.jwtSessionStorageKey);
+    if (!jwt) {
+      removeJwt();
     }
   };
 
-  useEffect(() => {
-    if (user && user.jwt) {
-      updateJwt(user.jwt);
+  const autoLogin = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      updateJwt(jwt.jwt);
+      if (jwt) {
+        const response = await ax.get(conf.jwtRoleEndpoint);
+        const userData = response.data;
+        const role = userData.role.name;
+        setUser({ ...userData, role: role });
+      }
+    } catch (error) {
+      console.error("Login failed:", error.message || "An error occurred");
+      alert("Login failed. Please check your credentials.");
+    } finally {
+      setIsLoading(false);
     }
-  }, [user]);
+  }, []);
+
+  useEffect(() => {
+    autoLogin();
+  }, []);
 
   const login = useCallback(
     async (formData) => {
@@ -35,15 +51,18 @@ export const AuthProvider = ({ children }) => {
         });
 
         const { jwt, user: userData } = response.data;
+
         updateJwt(jwt);
-        const roleResponse = await ax.get(conf.roleEndpoint);
+
+        const roleResponse = await ax.get(conf.jwtRoleEndpoint);
         const role = roleResponse.data.role.name;
 
         const cookieOptions = formData.rememberMe
           ? { path: "/", expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) } // Persistent cookie (30 days)
           : { path: "/" }; // Session cookie
 
-        setUser({ ...userData, role, jwt }, cookieOptions, formData.rememberMe);
+        setJwt({ jwt }, cookieOptions, formData.rememberMe);
+        setUser({ ...userData, role });
         if (role == "student") {
           navigate("/student/dashboard", { replace: true });
         } else if (role == "teacher") {
@@ -58,17 +77,19 @@ export const AuthProvider = ({ children }) => {
   );
 
   const logout = useCallback(() => {
-    removeUser();
+    removeJwt();
+    setUser();
     navigate("/", { replace: true });
-  }, [navigate, removeUser]);
+  }, [navigate, removeJwt]);
 
   const contextValue = useMemo(
     () => ({
+      isLoading,
       user,
       login,
       logout,
     }),
-    [user, login, logout]
+    [isLoading, user, login, logout]
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

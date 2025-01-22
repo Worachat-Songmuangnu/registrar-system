@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router";
 import { useAuth } from "./useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 export const ProtectedStudentRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { isLoading, user } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       navigate("/login", { replace: true });
     }
   }, [user, navigate]);
   if (!user || user.role != "student") {
-    return (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <>
         <div className="container mt-20 text-center ">
           <p className="text-4xl font-bold mb-5">You must Login as Student!</p>
