@@ -16,8 +16,8 @@ export default function SignIn() {
       setErrMsg(null);
       await login({ identifier, password, rememberMe });
     } catch (err) {
-      console.log(err);
       setErrMsg(err.message);
+      console.log(errMsg);
     } finally {
       setIsLoading(false);
     }
@@ -32,10 +32,7 @@ export default function SignIn() {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
               <div>
-                <label
-                  htmlFor="identifier"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                >
+                <label htmlFor="identifier" className="block mb-2 text-sm font-medium text-gray-900 ">
                   Username or email
                 </label>
                 <input
@@ -49,10 +46,7 @@ export default function SignIn() {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                >
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
                   Password
                 </label>
                 <input
@@ -84,25 +78,19 @@ export default function SignIn() {
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline "
-                >
+                <a href="/#" className="text-sm font-medium text-primary-600 hover:underline ">
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primarydark hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                className=" w-full text-white bg-primarydark hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
               >
                 Sign in
               </button>
               <p className="text-sm font-light text-gray-500 ">
                 Don't have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline "
-                >
+                <a href="/#" className="font-medium text-primary-600 hover:underline ">
                   Sign up
                 </a>
               </p>

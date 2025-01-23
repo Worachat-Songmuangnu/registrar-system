@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useAuth } from "./useAuth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Loading from "../components/Loading";
 
 export const ProtectedStudentRoute = ({ children }) => {
@@ -10,8 +10,8 @@ export const ProtectedStudentRoute = ({ children }) => {
     if (!isLoading && !user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate]);
-  if (!user || user.role != "student") {
+  }, [user, navigate, isLoading]);
+  if (!user || user.role !== "student") {
     return isLoading ? (
       <Loading />
     ) : (
