@@ -25,5 +25,9 @@ export const ProtectedTeacherRoute = ({ children }) => {
       </>
     );
   }
-  return <div className="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">{children}</div>;
+  return (
+    <div className="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">
+      {children}
+    </div>
+  );
 };
