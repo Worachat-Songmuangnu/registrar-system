@@ -1,6 +1,9 @@
 import { EyeIcon, PencilSquareIcon, ArchiveBoxArrowDownIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function TeacherScoreCard(props) {
+  const navigate=useNavigate()
+  console.log(props)
   return (
     <div className="w-full shadow-primarydark border-2 h-fit rounded-lg flex flex-row p-5">
       <div className="flex flex-col w-full justify-between">
@@ -20,7 +23,7 @@ export default function TeacherScoreCard(props) {
         </div>
       </div>
       <div className="flex flex-col gap-3 text-white w-40 ">
-        <button className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-primarydark border-2 text-primarydark rounded-lg hover:bg-primarydark hover:text-white">
+        <button onClick={()=>navigate(`/teacher/annoucement/${props.id}`, { replace: true })} className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-primarydark border-2 text-primarydark rounded-lg hover:bg-primarydark hover:text-white">
           <EyeIcon className="size-5" />
           <p>View</p>
         </button>

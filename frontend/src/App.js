@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
 import TeacherAnnoucement from "./pages/TeacherAnnoucement";
+import Annoucement from "./pages/ViewAnnoucement";
 
 function App() {
   return (
@@ -64,7 +65,14 @@ function App() {
               </ProtectedTeacherRoute>
             }
           />
-
+          <Route
+            path="/teacher/annoucement/:annoucementId"
+            element={
+              <ProtectedTeacherRoute>
+                <Annoucement />
+              </ProtectedTeacherRoute>
+            }
+          />
           {/* SignIn */}
           <Route path="/login" element={<SignIn />} />
           {/* </div> */}
