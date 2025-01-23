@@ -369,6 +369,48 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAnnouncementAnnouncement
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'announcements';
+  info: {
+    description: '';
+    displayName: 'announcement';
+    pluralName: 'announcements';
+    singularName: 'announcement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::announcement.announcement'
+    > &
+      Schema.Attribute.Private;
+    max_score: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    scores: Schema.Attribute.Relation<'oneToMany', 'api::score.score'>;
+    student: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    subject_id: Schema.Attribute.String;
+    subject_name: Schema.Attribute.String & Schema.Attribute.Required;
+    Teacher: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiScoreScore extends Struct.CollectionTypeSchema {
   collectionName: 'scores';
   info: {
@@ -381,14 +423,16 @@ export interface ApiScoreScore extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    announcement: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::announcement.announcement'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    event: Schema.Attribute.Text & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::score.score'> &
       Schema.Attribute.Private;
-    max_score: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     score: Schema.Attribute.String;
     students: Schema.Attribute.Relation<
@@ -930,12 +974,20 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    Sannouncements: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::announcement.announcement'
+    >;
     scores: Schema.Attribute.Relation<'oneToMany', 'api::score.score'>;
-    Std_subject: Schema.Attribute.Relation<
+    Std_subject0: Schema.Attribute.Relation<
       'manyToMany',
       'api::subject.subject'
     >;
-    Teac_subject: Schema.Attribute.Relation<
+    Tannouncements: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::announcement.announcement'
+    >;
+    Teac_subject0: Schema.Attribute.Relation<
       'oneToMany',
       'api::subject.subject'
     >;
@@ -961,6 +1013,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::announcement.announcement': ApiAnnouncementAnnouncement;
       'api::score.score': ApiScoreScore;
       'api::subject.subject': ApiSubjectSubject;
       'plugin::content-releases.release': PluginContentReleasesRelease;

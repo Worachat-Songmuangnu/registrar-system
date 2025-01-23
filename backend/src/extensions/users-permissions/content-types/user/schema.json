@@ -65,18 +65,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "Teac_subject": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::subject.subject",
-      "mappedBy": "teacher"
-    },
-    "Std_subject": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::subject.subject",
-      "inversedBy": "student"
-    },
     "scores": {
       "type": "relation",
       "relation": "oneToMany",
@@ -86,6 +74,30 @@
     "Name": {
       "type": "string",
       "required": true
+    },
+    "Teac_subject0": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subject.subject",
+      "mappedBy": "teacher"
+    },
+    "Std_subject0": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::subject.subject",
+      "inversedBy": "student"
+    },
+    "Tannouncements": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::announcement.announcement",
+      "mappedBy": "Teacher"
+    },
+    "Sannouncements": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::announcement.announcement",
+      "mappedBy": "student"
     }
   }
 }
