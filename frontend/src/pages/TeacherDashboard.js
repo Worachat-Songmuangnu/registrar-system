@@ -23,6 +23,7 @@ export default function TeacherDashboard() {
     }
     fetchData()
   },[isLoading])
+  
   return (
     <div className="w-full flex flex-col mt-16">
       <div className="mb-12">
@@ -52,10 +53,10 @@ export default function TeacherDashboard() {
       {data ? (
           data.map((announcement) => (
             <TeacherScoreCard
-              key={announcement.id}
+              id={announcement.id}
               title={announcement.Title}
               name={announcement.subject_name}
-              id ={announcement.subject_id}
+              subject_id ={announcement.subject_id}
               publish={announcement.publishedAt}
               update={announcement.updatedAt}
               scores={announcement.scores.data}
