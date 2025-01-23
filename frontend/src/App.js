@@ -10,7 +10,7 @@ import SignIn from "./pages/SignIn";
 import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
-import { useEffect } from "react";
+import TeacherAnnoucement from "./pages/TeacherAnnoucement";
 
 function App() {
   return (
@@ -53,6 +53,14 @@ function App() {
             element={
               <ProtectedTeacherRoute>
                 <TeacherDashboard />
+              </ProtectedTeacherRoute>
+            }
+          />
+          <Route
+            path="/teacher/annoucement"
+            element={
+              <ProtectedTeacherRoute>
+                <TeacherAnnoucement />
               </ProtectedTeacherRoute>
             }
           />

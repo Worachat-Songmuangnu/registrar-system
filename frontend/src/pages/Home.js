@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-
+import { ChartBarIcon, ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 export default function Home() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -15,15 +15,16 @@ export default function Home() {
         {user ? (
           <button
             onClick={() => {
-              if (user.role == "student") {
+              if (user.role === "student") {
                 navigate("/student/dashboard");
-              } else if (user.role == "teacher") {
+              } else if (user.role === "teacher") {
                 navigate("/teacher/dashboard");
               }
             }}
             className="text-black font-bold  bg-white px-12 w-80 py-4 mb-5 rounded-full flex flex-row gap-0.5 justify-between"
           >
-            <img src="./icons/graph.svg" className="w-5" />
+            <ChartBarIcon className="size-5" />
+
             <p className="">Go to Dashboard</p>
             <div></div>
           </button>
@@ -32,7 +33,7 @@ export default function Home() {
             onClick={() => navigate("/login")}
             className="text-black font-bold  bg-white px-12 w-80 py-4 mb-5 rounded-full flex flex-row gap-0.5 justify-between"
           >
-            <img src="./icons/login.svg" className="w-5" />
+            <ArrowLeftEndOnRectangleIcon className="size-5" />
             <p className="">Login with Email</p>
             <div></div>
           </button>

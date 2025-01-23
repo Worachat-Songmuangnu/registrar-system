@@ -8,7 +8,9 @@ const UserDetails = React.memo(({ user, logout }) => {
     <div className="text-white">
       Login as:{" "}
       <span className="hover:underline">
-        <a onClick={logout}>{user.email}</a>
+        <a href="/#" onClick={logout}>
+          {user.email}
+        </a>
       </span>
     </div>
   );

@@ -10,8 +10,8 @@ export const ProtectedTeacherRoute = ({ children }) => {
     if (!isLoading && !user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate]);
-  if (!user || user.role != "teacher") {
+  }, [user, navigate, isLoading]);
+  if (!user || user.role !== "teacher") {
     return isLoading ? (
       <Loading />
     ) : (
@@ -25,5 +25,5 @@ export const ProtectedTeacherRoute = ({ children }) => {
       </>
     );
   }
-  return <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">{children}</div>;
+  return <div className="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">{children}</div>;
 };

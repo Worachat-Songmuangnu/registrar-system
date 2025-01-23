@@ -13,12 +13,15 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const updateJwt = (jwt) => {
-    axData.jwt = jwt;
-    if (!jwt) {
-      removeJwt();
-    }
-  };
+  const updateJwt = useCallback(
+    (jwt) => {
+      axData.jwt = jwt;
+      if (!jwt) {
+        removeJwt();
+      }
+    },
+    [removeJwt]
+  );
 
   const autoLogin = useCallback(async () => {
     try {
@@ -35,10 +38,11 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [jwt, updateJwt]);
 
   useEffect(() => {
     autoLogin();
+    // eslint-disable-next-line
   }, []);
 
   const login = useCallback(
@@ -62,9 +66,9 @@ export const AuthProvider = ({ children }) => {
 
         setJwt({ jwt }, cookieOptions, formData.rememberMe);
         setUser({ ...userData, role });
-        if (role == "student") {
+        if (role === "student") {
           navigate("/student/dashboard", { replace: true });
-        } else if (role == "teacher") {
+        } else if (role === "teacher") {
           navigate("/teacher/dashboard", { replace: true });
         }
       } catch (error) {
@@ -72,7 +76,7 @@ export const AuthProvider = ({ children }) => {
         alert("Login failed. Please check your credentials.");
       }
     },
-    [navigate, setUser]
+    [navigate, setUser, setJwt, updateJwt]
   );
 
   const logout = useCallback(() => {
