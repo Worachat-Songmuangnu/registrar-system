@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "subjects",
+  "collectionName": "announcements",
   "info": {
-    "singularName": "subject",
-    "pluralName": "subjects",
-    "displayName": "subject",
+    "singularName": "announcement",
+    "pluralName": "announcements",
+    "displayName": "announcement",
     "description": ""
   },
   "options": {
@@ -12,32 +12,37 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "Title": {
       "type": "string",
       "required": true
-    },
-    "subject_id": {
-      "type": "string",
-      "required": true,
-      "unique": true
     },
     "scores": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::score.score",
-      "mappedBy": "subject"
+      "mappedBy": "announcement"
     },
-    "teacher": {
+    "subject_name": {
+      "type": "string",
+      "required": true
+    },
+    "subject_id": {
+      "type": "string"
+    },
+    "Teacher": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "Teac_subject0"
+      "inversedBy": "Tannouncements"
     },
     "student": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "Std_subject0"
+      "inversedBy": "Sannouncements"
+    },
+    "max_score": {
+      "type": "string"
     }
   }
 }
