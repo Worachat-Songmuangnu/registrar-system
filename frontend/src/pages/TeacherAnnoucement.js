@@ -3,10 +3,36 @@ import HrLine from "../components/HrLine";
 import { useNavigate } from "react-router-dom";
 import EditableTable from "../context/EditableTable";
 import { useState } from "react";
+import ax from "../conf/ax";
+import { useAuth } from "../context/useAuth";
 
 export default function TeacherAnnoucement() {
-  const [maxScore, setMaxScore] = useState(100);
+  const { user, isLoading } = useAuth();
+  const [maxScore, setMaxScore] = useState(null);
+  const [title, setTitle] = useState("");
+  const [subjectName, setSubjectName] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
 
+    const announcementData = {
+      data: {
+      Title: title,            
+      subject_name: subjectName,        
+      max_score: maxScore,
+      Teacher : user.id
+    }};
+
+    try {
+      const res = await ax.post("/announcements", announcementData
+      );
+      alert("announcement created successfully"); 
+    } catch (error) {
+      console.error("Error creating announcement:", error);
+      alert("Error creating announcement:"+  error.message); 
+    }
+  };
+
+  
   const navigate = useNavigate();
   return (
     <>
@@ -19,11 +45,13 @@ export default function TeacherAnnoucement() {
         </div>
         <HrLine />
 
-        <form class="flex flex-col ">
-          <div class="flex flex-row mb-5 justify-center items-center ">
+        <form className="flex flex-col " onSubmit={handleSubmit}>
+          <div className="flex flex-row mb-5 justify-center items-center ">
             <input
               type="text"
               id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               placeholder="Title"
               required
@@ -31,17 +59,15 @@ export default function TeacherAnnoucement() {
           </div>
           <div className="flex flex-row gap-4 w-full">
             <div className="w-1/2">
-              <select
-                id="subject"
-                className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 "
-                required
-              >
-                <option selected>Select Subject</option>
-                <option value="240122">240-122 Basic Software Labaratory</option>
-                <option value="240123">240-123 Data Structure and Algorithm</option>
-                <option value="240124">240-124 Web Developer Module</option>
-                <option value="240125">240-125 Something</option>
-              </select>
+            <input
+              type="text"
+              id="subject name"
+              value={subjectName}
+              onChange={(e) => setSubjectName(e.target.value)}
+              class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              placeholder="Subject name"
+              required
+            />
             </div>
             <div class="w-1/2 flex flex-row mb-5 justify-center items-center ">
               <input
@@ -65,7 +91,8 @@ export default function TeacherAnnoucement() {
             >
               Create Annoucement
             </button>
-            <button class="text-red-500 font-semibold border-red-500 border-2  focus:ring-4 focus:outline-none   rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  ">
+            <button type="button" onClick={() => navigate("/teacher/dashboard")} 
+            class="text-red-500 font-semibold border-red-500 border-2  focus:ring-4 focus:outline-none   rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  ">
               Cancel
             </button>
           </div>
