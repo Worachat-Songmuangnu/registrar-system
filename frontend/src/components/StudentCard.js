@@ -1,5 +1,6 @@
 // components/StudentCard.js
 import React from "react";
+import dayjs from "dayjs";
 
 const StudentCard = (props) => {
   return (
@@ -18,7 +19,9 @@ const StudentCard = (props) => {
           </p>
         </div>
         <div className="flex flex-row gap-24">
-          <p className="mb-3 font-normal text-gray-700 ">Date : {props.Date}</p>
+          <p className="mb-3 font-normal text-gray-700 ">
+            Date : {dayjs(props.Date).format("MMM D, YYYY h:mm A")}
+          </p>
           <p className="mb-3 font-normal text-gray-700 ">
             Auditor : {props.Auditor}
           </p>
