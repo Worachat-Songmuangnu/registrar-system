@@ -4,6 +4,7 @@ import {
   ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 export default function TeacherScoreCard(props) {
   const navigate = useNavigate();
@@ -23,15 +24,15 @@ export default function TeacherScoreCard(props) {
         </div>
         <div className="flex flex-row gap-6 mt-2">
           <p className="text-sm font-thin text-primarydark">
-            Post on: {props.publish}
+            Post on: {dayjs(props.create).format("MMM D, YYYY h:mm A")}
           </p>
           <p className="text-sm font-thin text-primarydark">
-            Last updated: {props.update}
+            Last updated: {dayjs(props.update).format("MMM D, YYYY h:mm A")}
           </p>
         </div>
       </div>
       <div className="flex flex-col gap-3 text-white w-40 ">
-        <button
+        {/* <button
           onClick={() =>
             navigate(`/teacher/announcement/${props.id}`, { replace: true })
           }
@@ -39,7 +40,7 @@ export default function TeacherScoreCard(props) {
         >
           <EyeIcon className="size-5" />
           <p>View</p>
-        </button>
+        </button> */}
         <button
           onClick={() => navigate(`/teacher/announcement/${props.id}`)}
           className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-primarydark border-2 text-primarydark rounded-lg hover:bg-primarydark hover:text-white"
