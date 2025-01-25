@@ -11,7 +11,7 @@ import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
 import TeacherAnnoucement from "./pages/TeacherAnnoucement";
-import Annoucement from "./pages/ViewAnnoucement";
+import Annoucement from "./pages/Annoucement";
 
 function App() {
   return (

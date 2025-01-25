@@ -379,7 +379,7 @@ export interface ApiAnnouncementAnnouncement
     singularName: 'announcement';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -420,7 +420,7 @@ export interface ApiScoreScore extends Struct.CollectionTypeSchema {
     singularName: 'score';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     announcement: Schema.Attribute.Relation<
@@ -433,6 +433,7 @@ export interface ApiScoreScore extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::score.score'> &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     score: Schema.Attribute.String;
     students: Schema.Attribute.Relation<
@@ -443,6 +444,7 @@ export interface ApiScoreScore extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    username: Schema.Attribute.String;
   };
 }
 

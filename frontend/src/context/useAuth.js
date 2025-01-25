@@ -1,5 +1,12 @@
 // useAuth.js
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router";
 import { useCookie } from "./useCookie";
 import conf from "../conf/main";
@@ -10,7 +17,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [jwt, setJwt, removeJwt] = useCookie("user", null);
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoginPending, setIsLoginPending] = useState(true);
   const navigate = useNavigate();
 
   const updateJwt = useCallback(
@@ -25,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const autoLogin = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsLoginPending(true);
       if (jwt) {
         updateJwt(jwt.jwt);
         const response = await ax.get(conf.jwtRoleEndpoint);
@@ -36,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login failed:", error.message || "An error occurred");
     } finally {
-      setIsLoading(false);
+      setIsLoginPending(false);
     }
   }, [jwt, updateJwt]);
 
@@ -61,7 +68,10 @@ export const AuthProvider = ({ children }) => {
         const role = roleResponse.data.role.name;
 
         const cookieOptions = formData.rememberMe
-          ? { path: "/", expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) } // Persistent cookie (30 days)
+          ? {
+              path: "/",
+              expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            } // Persistent cookie (30 days)
           : { path: "/" }; // Session cookie
 
         setJwt({ jwt }, cookieOptions, formData.rememberMe);
@@ -87,15 +97,17 @@ export const AuthProvider = ({ children }) => {
 
   const contextValue = useMemo(
     () => ({
-      isLoading,
+      isLoginPending,
       user,
       login,
       logout,
     }),
-    [isLoading, user, login, logout]
+    [isLoginPending, user, login, logout]
   );
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

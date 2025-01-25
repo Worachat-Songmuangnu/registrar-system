@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import Loading from "../components/Loading";
 
 export const ProtectedTeacherRoute = ({ children }) => {
-  const { isLoading, user } = useAuth();
+  const { isLoginPending, user } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isLoginPending && !user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate, isLoading]);
+  }, [user, navigate, isLoginPending]);
   if (!user || user.role !== "teacher") {
-    return isLoading ? (
+    return isLoginPending ? (
       <Loading />
     ) : (
       <>
