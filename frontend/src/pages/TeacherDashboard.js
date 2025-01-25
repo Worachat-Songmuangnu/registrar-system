@@ -9,6 +9,7 @@ import ax from "../conf/ax";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import Loading from "../components/Loading";
+import conf from "../conf/main";
 export default function TeacherDashboard() {
   const { user, isLoginPending } = useAuth();
   const [annoucements, setAnnoucements] = useState(null);
@@ -18,22 +19,23 @@ export default function TeacherDashboard() {
     try {
       setIsLoading(true);
       const res = await ax.get(
-        `/announcements?populate=Teacher&populate=scores&populate=student&filters[Teacher][username]=${user.username}`
+        conf.fetchTeacherAllAnnouncementEndpoint(user.username)
       );
       setAnnoucements(res.data.data);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     } finally {
       setIsLoading(false);
     }
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, [isLoginPending]);
 
   const updateAnnoucement = async (announcement) => {
     try {
-      await ax.put(`/announcements/${announcement.documentId}`, {
+      await ax.put(conf.updateAnnoucement(announcement.documentId), {
         data: announcement.data,
       });
     } catch (e) {
@@ -59,6 +61,7 @@ export default function TeacherDashboard() {
       };
 
       await updateAnnoucement(announcementData);
+      fetchData();
     } catch (e) {
       console.error("Error archiving announcement:", e);
     } finally {
@@ -84,7 +87,7 @@ export default function TeacherDashboard() {
           </button>
         </div>
         <button
-          onClick={() => navigate("/teacher/annoucement")}
+          onClick={() => navigate("/teacher/announcement")}
           className="flex flex-row items-center gap-2 w-fit px-8 py-1.5 bg-primarydark text-white font-semibold rounded-lg"
         >
           <PlusCircleIcon className="size-5 " />

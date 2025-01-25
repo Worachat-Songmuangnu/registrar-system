@@ -33,7 +33,7 @@ export default function TeacherScoreCard(props) {
       <div className="flex flex-col gap-3 text-white w-40 ">
         <button
           onClick={() =>
-            navigate(`/teacher/annoucement/${props.id}`, { replace: true })
+            navigate(`/teacher/announcement/${props.id}`, { replace: true })
           }
           className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-primarydark border-2 text-primarydark rounded-lg hover:bg-primarydark hover:text-white"
         >
@@ -41,13 +41,13 @@ export default function TeacherScoreCard(props) {
           <p>View</p>
         </button>
         <button
-          onClick={() => navigate(`/teacher/annoucement/${props.id}`)}
+          onClick={() => navigate(`/teacher/announcement/${props.id}`)}
           className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-primarydark border-2 text-primarydark rounded-lg hover:bg-primarydark hover:text-white"
         >
           <PencilSquareIcon className="size-5" />
           Edit
         </button>
-        {props.status == "publish" ? (
+        {props.status === "publish" ? (
           <button
             onClick={() => props.handleArchive(props.id)}
             className="flex flex-row items-center justify-center gap-3 transition py-1.5 border-red-800 border-2 text-red-800 rounded-lg hover:bg-red-800 hover:text-white"

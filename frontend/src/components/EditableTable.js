@@ -26,7 +26,7 @@ export default function EditableTable(props) {
               <tr
                 key={row.id}
                 className={`hover:bg-gray-100 ${
-                  row.status == "delete" && "bg-red-100 hover:bg-red-200"
+                  row.status === "delete" && "bg-red-100 hover:bg-red-200"
                 }`}
               >
                 <td className="border border-gray-300 px-4 py-2 text-center">

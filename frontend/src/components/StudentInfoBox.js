@@ -3,10 +3,10 @@ import React from "react";
 
 const StudenInfoBox = (props) => {
   return (
-    <div class="flex items-center gap-4">
-      <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full ">
+    <div className="flex items-center gap-4">
+      <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full ">
         <svg
-          class="absolute w-12 h-12 text-gray-400 -left-1"
+          className="absolute w-12 h-12 text-gray-400 -left-1"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -18,9 +18,9 @@ const StudenInfoBox = (props) => {
           ></path>
         </svg>
       </div>
-      <div class="font-medium ">
+      <div className="font-medium ">
         <div>{props.studentname}</div>
-        <div class="text-sm  ">{props.studentid}</div>
+        <div className="text-sm  ">{props.studentid}</div>
       </div>
     </div>
   );
