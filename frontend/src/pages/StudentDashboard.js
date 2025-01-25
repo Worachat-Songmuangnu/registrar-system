@@ -7,18 +7,23 @@ import ax from "../conf/ax";
 import { useEffect, useState } from "react";
 import conf from "../conf/main";
 import StudenInfoBox from "../components/StudentInfoBox";
+import Loading from "../components/Loading";
 
 export default function StudentDashboard() {
   const { user, isLoginPending } = useAuth();
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const res = await ax.get(
         conf.fetchStudentAnnouncementEndpoint(user.username)
       );
       setData(res.data.data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -26,7 +31,9 @@ export default function StudentDashboard() {
     // eslint-disable-next-line
   }, [isLoginPending]);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="flex flex-col h-screen w-screen gap-4 mt-12">
       <StudenInfoBox studentname={user.Name} studentid={user.username} />
 
@@ -37,7 +44,7 @@ export default function StudentDashboard() {
       <div className="flex flex-col gap-5 overflow-y-scroll">
         {data ? (
           data
-            .filter((score) => score.announcement.postStatus === "publish")
+            .filter((score) => score.announcement?.postStatus === "publish")
             .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
             .map((score) => (
               <StudentCard
