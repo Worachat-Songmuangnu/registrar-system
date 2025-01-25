@@ -92,7 +92,7 @@ export default function CreateAnnouncement() {
           <p className="text-3xl">Create New Annoucement</p>
         </div>
         <HrLine />
-        <Readexcel scores={scores} setScores={setScores} />
+        <Readexcel edit={true} scores={scores} setScores={setScores} />
         <form className="flex flex-col " onSubmit={handleSave}>
           <div className="flex flex-row mb-5 justify-center items-center ">
             <input

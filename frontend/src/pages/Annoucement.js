@@ -19,7 +19,7 @@ export default function Annoucement() {
 
   const [announcement, setAnnouncement] = useState(null);
   const [scores, setScores] = useState(null);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
@@ -115,7 +115,7 @@ export default function Annoucement() {
             </span>
             <input
               type="checkbox"
-              value={edit}
+              checked={edit}
               onChange={(e) => setEdit(!edit)}
               className="sr-only peer"
             />
@@ -123,7 +123,7 @@ export default function Annoucement() {
           </label>
         </div>
         <HrLine />
-        <ReadExcel scores={scores} setScores={setScores} />
+        <ReadExcel edit={edit} scores={scores} setScores={setScores} />
         <form onSubmit={(e) => handleSave(e)} className="flex flex-col ">
           <AnnouncementInfo
             edit={edit}
