@@ -14,12 +14,14 @@ import { useAuth } from "../context/useAuth";
 import Loading from "../components/Loading";
 import conf from "../conf/main";
 import dayjs from "dayjs";
+import SearchBar from "../components/SearchBar"; // นำเข้า Component Search
 export default function TeacherDashboard() {
   const { user, isLoginPending } = useAuth();
   const [annoucements, setAnnoucements] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [showArchivePopup, setShowArchivePopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // ใช้ เก็บค่าคำค้นหา
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -110,13 +112,7 @@ export default function TeacherDashboard() {
       </div>
       <div className="w-full flex flex-row justify-between h-10">
         <div className="flex flex-row w-full gap-4">
-          <input
-            className="text-primarydark border-primarydark border-2 w-full px-4 focus:outline-none rounded-lg"
-            placeholder="Search subject"
-          />
-          <button className="bg-primarydark px-4 rounded-md">
-            <MagnifyingGlassIcon className="size-5 text-white" />
-          </button>
+          <SearchBar onSearch={(term) => setSearchTerm(term)} />
         </div>
         <button
           onClick={() => setShowArchivePopup(true)}
@@ -138,6 +134,27 @@ export default function TeacherDashboard() {
         {annoucements ? (
           annoucements
             .filter((announcement) => announcement.postStatus === "publish")
+            .filter((announcement) => {
+              const lowerCaseSearchTerm = searchTerm.toLowerCase();
+              return (
+                announcement.Title.toLowerCase().includes(
+                  lowerCaseSearchTerm
+                ) || // ค้นหาจากชื่อประกาศ
+                announcement.subject_name
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) || // ค้นหาจากชื่อวิชา
+                announcement.postStatus
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) || // ค้นหาจากสถานะ
+                announcement.createdAt
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) || // ค้นหาจากวันที่สร้าง
+                announcement.updatedAt
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) || // ค้นหาจากวันที่อัปเดต
+                announcement.max_score.toString().includes(lowerCaseSearchTerm)
+              );
+            })
             .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
             .map((announcement) => (
               <TeacherScoreCard

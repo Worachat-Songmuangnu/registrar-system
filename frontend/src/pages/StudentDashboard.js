@@ -1,7 +1,7 @@
 // StudentDashboard.js
 import React from "react";
 import StudentCard from "../components/StudentCard"; // นำเข้า Component StudentCard
-import StudentSearch from "../components/StudentSearch"; // นำเข้า Component StudentSearch
+import SearchBar from "../components/SearchBar"; // นำเข้า Component Search
 import { useAuth } from "../context/useAuth";
 import ax from "../conf/ax";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ export default function StudentDashboard() {
   const { user, isLoginPending } = useAuth();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState(""); // ใช้ เก็บค่าคำค้นหา
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -40,15 +41,35 @@ export default function StudentDashboard() {
       <h1 className="text-4xl font-bold text-center text-black mb-8">
         School-Record
       </h1>
-      <StudentSearch />
+      <SearchBar onSearch={(term) => setSearchTerm(term)} />
+
       <div className="flex flex-col gap-5 overflow-y-scroll">
         {data ? (
           data
             .filter((score) => score.announcement?.postStatus === "publish")
+            .filter((score) => {
+              const lowerCaseSearchTerm = searchTerm.toLowerCase();
+              return (
+                score.announcement.subject_name
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) || // ค้นหาจากชื่อวิชา
+                score.announcement.Teacher?.[0]?.Name.toLowerCase().includes(
+                  lowerCaseSearchTerm
+                ) || // ค้นหาจากชื่อครู
+                score.score.toString().includes(lowerCaseSearchTerm) || // ค้นหาจากคะแนน
+                (score.score > score.announcement.max_score / 2
+                  ? "Pass"
+                  : "Fail"
+                )
+                  .toLowerCase()
+                  .includes(lowerCaseSearchTerm) // ค้นหาจากสถานะ (Pass/Fail)
+              );
+            })
             .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
             .map((score) => (
               <StudentCard
                 key={score.id}
+                Title={score.announcement.Title}
                 SubjectId={score.announcement.subject_id}
                 Subject={score.announcement.subject_name}
                 Score={score.score}

@@ -1,9 +1,12 @@
-// components/StudentSearch.js
+// components/SearchBar.js
 import React from "react";
 
-const StudentSearch = (props) => {
+const SearchBar = (props) => {
+  const handleInputChange = (e) => {
+    props.onSearch(e.target.value); // ส่งค่าคำค้นหากลับไปยัง parent component
+  };
   return (
-    <form className="flex items-center ">
+    <form className="flex items-center w-full">
       <label for="simple-search" className="sr-only">
         Search
       </label>
@@ -12,8 +15,9 @@ const StudentSearch = (props) => {
           type="text"
           id="simple-search"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  "
-          placeholder="Search for subject..."
+          placeholder="Search..."
           required
+          onChange={handleInputChange} // เรียกฟังก์ชันเมื่อมีการพิมพ์
         />
       </div>
       <button
@@ -41,4 +45,4 @@ const StudentSearch = (props) => {
   );
 };
 
-export default StudentSearch;
+export default SearchBar;
