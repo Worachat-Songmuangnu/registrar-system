@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/useAuth";
 
 export default function SignIn() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoginPending, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
 
   const [identifier, setidentifier] = useState("");
@@ -23,7 +23,7 @@ export default function SignIn() {
     }
   };
   return (
-    !isLoading && (
+    !isLoginPending && (
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto w-1/2">
         <div className="w-full bg-white rounded-lg border-gray-200 border-2 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -32,7 +32,10 @@ export default function SignIn() {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
               <div>
-                <label htmlFor="identifier" className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label
+                  htmlFor="identifier"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                >
                   Username or email
                 </label>
                 <input
@@ -46,7 +49,10 @@ export default function SignIn() {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                >
                   Password
                 </label>
                 <input
@@ -78,9 +84,6 @@ export default function SignIn() {
                     </label>
                   </div>
                 </div>
-                <a href="/#" className="text-sm font-medium text-primary-600 hover:underline ">
-                  Forgot password?
-                </a>
               </div>
               <button
                 type="submit"
@@ -88,12 +91,6 @@ export default function SignIn() {
               >
                 Sign in
               </button>
-              <p className="text-sm font-light text-gray-500 ">
-                Don't have an account yet?{" "}
-                <a href="/#" className="font-medium text-primary-600 hover:underline ">
-                  Sign up
-                </a>
-              </p>
             </form>
           </div>
         </div>

@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import Loading from "../components/Loading";
 
 export const ProtectedStudentRoute = ({ children }) => {
-  const { isLoading, user } = useAuth();
+  const { isLoginPending, user } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isLoginPending && !user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate, isLoading]);
+  }, [user, navigate, isLoginPending]);
   if (!user || user.role !== "student") {
-    return isLoading ? (
+    return isLoginPending ? (
       <Loading />
     ) : (
       <>
@@ -25,5 +25,9 @@ export const ProtectedStudentRoute = ({ children }) => {
       </>
     );
   }
-  return <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">{children}</div>;
+  return (
+    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">
+      {children}
+    </div>
+  );
 };
