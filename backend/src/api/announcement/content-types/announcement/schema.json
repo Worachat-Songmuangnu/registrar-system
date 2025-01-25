@@ -43,6 +43,9 @@
     },
     "max_score": {
       "type": "string"
+    },
+    "postStatus": {
+      "type": "string"
     }
   }
 }

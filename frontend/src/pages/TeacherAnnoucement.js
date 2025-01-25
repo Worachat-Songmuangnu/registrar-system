@@ -101,6 +101,7 @@ export default function TeacherAnnoucement() {
         Title: title,
         subject_name: subjectName,
         max_score: maxScore,
+        postStatus: "publish",
         Teacher: { connect: { id: user.id } },
       },
     };

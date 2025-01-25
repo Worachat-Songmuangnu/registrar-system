@@ -36,19 +36,25 @@ export default function StudentDashboard() {
       <StudentSearch />
       <div className="flex flex-col gap-5 overflow-y-scroll">
         {data ? (
-          data.map((score) => (
-            <StudentCard
-              SubjectId={score.announcement.subject_id}
-              Subject={score.announcement.subject_name}
-              Score={score.score}
-              MaxScore={score.announcement.max_score}
-              Status={
-                score.score > score.announcement.max_score / 2 ? "Pass" : "Fail"
-              }
-              Date={score.updatedAt}
-              Auditor={score.announcement.Teacher?.[0]?.Name}
-            />
-          ))
+          data
+            .filter((score) => score.announcement.postStatus === "publish")
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .map((score) => (
+              <StudentCard
+                key={score.id}
+                SubjectId={score.announcement.subject_id}
+                Subject={score.announcement.subject_name}
+                Score={score.score}
+                MaxScore={score.announcement.max_score}
+                Status={
+                  score.score > score.announcement.max_score / 2
+                    ? "Pass"
+                    : "Fail"
+                }
+                Date={score.updatedAt}
+                Auditor={score.announcement.Teacher?.[0]?.Name}
+              />
+            ))
         ) : (
           <p className="text-center text-gray-500">No scores found.</p>
         )}

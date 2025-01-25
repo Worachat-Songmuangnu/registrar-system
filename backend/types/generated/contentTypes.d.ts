@@ -392,6 +392,7 @@ export interface ApiAnnouncementAnnouncement
     > &
       Schema.Attribute.Private;
     max_score: Schema.Attribute.String;
+    postStatus: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     scores: Schema.Attribute.Relation<'oneToMany', 'api::score.score'>;
     student: Schema.Attribute.Relation<
