@@ -10,6 +10,7 @@ import { handleChange, handleAddRow, handleDeleteRow } from "../utils/handle";
 import conf from "../conf/main";
 import AnnouncementInfo from "../components/AnnouncementInfo";
 import { updateScoreCondition } from "../utils/crudAPI";
+import ReadExcel from "../components/Readexecel";
 
 export default function Annoucement() {
   const { user, isLoginPending } = useAuth();
@@ -122,7 +123,7 @@ export default function Annoucement() {
           </label>
         </div>
         <HrLine />
-
+        <ReadExcel scores={scores} setScores={setScores} />
         <form onSubmit={(e) => handleSave(e)} className="flex flex-col ">
           <AnnouncementInfo
             edit={edit}
@@ -149,7 +150,9 @@ export default function Annoucement() {
               Save change
             </button>
             <button
-              onClick={() => navigate(`teacher/annoucement/${announcementId}`)}
+              onClick={() => {
+                fetchData();
+              }}
               type="button"
               className="text-red-500 font-semibold border-red-500 border-2  focus:ring-4 focus:outline-none rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  "
             >

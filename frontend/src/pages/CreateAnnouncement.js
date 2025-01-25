@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 import { handleAddRow, handleChange, handleDeleteRow } from "../utils/handle";
 import { updateScoreCondition } from "../utils/crudAPI";
 import conf from "../conf/main";
+import Readexcel from "../components/Readexecel";
 export default function CreateAnnouncement() {
   const { user } = useAuth();
 
@@ -91,7 +92,7 @@ export default function CreateAnnouncement() {
           <p className="text-3xl">Create New Annoucement</p>
         </div>
         <HrLine />
-
+        <Readexcel scores={scores} setScores={setScores} />
         <form className="flex flex-col " onSubmit={handleSave}>
           <div className="flex flex-row mb-5 justify-center items-center ">
             <input
