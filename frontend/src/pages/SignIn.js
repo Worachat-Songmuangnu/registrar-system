@@ -3,7 +3,8 @@ import { useAuth } from "../context/useAuth";
 
 export default function SignIn() {
   const [isLoginPending, setIsLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState(null);
+  // TODO: popup modal error msg
+  // const [errMsg, setErrMsg] = useState(null);
 
   const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -13,11 +14,11 @@ export default function SignIn() {
   const handleLogin = async () => {
     try {
       setIsLoading(true);
-      setErrMsg(null);
+      // setErrMsg(null);
       await login({ identifier, password, rememberMe });
-    } catch (err) {
-      setErrMsg(err.message);
-      console.log(errMsg);
+    } catch (e) {
+      // setErrMsg(e.message);
+      console.log(e);
     } finally {
       setIsLoading(false);
     }

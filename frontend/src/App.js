@@ -10,8 +10,8 @@ import SignIn from "./pages/SignIn";
 import { AuthProvider } from "./context/useAuth";
 import { ProtectedStudentRoute } from "./context/ProtectedStudentRoute";
 import { ProtectedTeacherRoute } from "./context/ProtectedTeacherRoute";
-import TeacherAnnoucement from "./pages/TeacherAnnoucement";
 import Annoucement from "./pages/Annoucement";
+import CreateAnnouncement from "./pages/CreateAnnouncement";
 
 function App() {
   return (
@@ -21,7 +21,6 @@ function App() {
         <Routes element={<NavigationBar />}>
           <Route path="/" element={<Home />} />
 
-          {/* <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"> */}
           {/* Student */}
           <Route
             path="/student"
@@ -58,15 +57,15 @@ function App() {
             }
           />
           <Route
-            path="/teacher/annoucement"
+            path="/teacher/announcement"
             element={
               <ProtectedTeacherRoute>
-                <TeacherAnnoucement />
+                <CreateAnnouncement />
               </ProtectedTeacherRoute>
             }
           />
           <Route
-            path="/teacher/annoucement/:annoucementId"
+            path="/teacher/announcement/:announcementId"
             element={
               <ProtectedTeacherRoute>
                 <Annoucement />
@@ -75,7 +74,6 @@ function App() {
           />
           {/* SignIn */}
           <Route path="/login" element={<SignIn />} />
-          {/* </div> */}
         </Routes>
       </AuthProvider>
     </>

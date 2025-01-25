@@ -2,35 +2,35 @@
 import React from "react";
 import StudentCard from "../components/StudentCard"; // นำเข้า Component StudentCard
 import StudentSearch from "../components/StudentSearch"; // นำเข้า Component StudentSearch
-import StudenInfoBox from "../components/StudentInfoBox"; // นำเข้า Component StudenInfoBox
 import { useAuth } from "../context/useAuth";
-import ax, { axData } from "../conf/ax";
+import ax from "../conf/ax";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import conf from "../conf/main";
+import StudenInfoBox from "../components/StudentInfoBox";
 
 export default function StudentDashboard() {
   const { user, isLoginPending } = useAuth();
   const [data, setData] = useState(null);
-  const navigate = useNavigate();
+  const fetchData = async () => {
+    try {
+      const res = await ax.get(
+        conf.fetchStudentAnnouncementEndpoint(user.username)
+      );
+      setData(res.data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await ax.get(
-          `/scores?populate=announcement&populate[announcement][populate][0]=Teacher&populate=students&filters[username]=${user.username}`
-        );
-        setData(res.data.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchData();
+    // eslint-disable-next-line
   }, [isLoginPending]);
 
   return (
-    <div className="flex flex-col h-screen w-screen gap-4">
-      {/* <StudenInfoBox studentname={user.Name} studentid={user.username} /> */}
+    <div className="flex flex-col h-screen w-screen gap-4 mt-12">
+      <StudenInfoBox studentname={user.Name} studentid={user.username} />
 
-      <h1 className="text-4xl font-bold text-center text-black mt-12 mb-8">
+      <h1 className="text-4xl font-bold text-center text-black mb-8">
         School-Record
       </h1>
       <StudentSearch />
